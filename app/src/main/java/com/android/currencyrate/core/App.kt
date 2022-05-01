@@ -12,16 +12,28 @@ import com.android.currencyrate.presentation.BaseCurrencyDomainToUiMapper
 import com.android.currencyrate.presentation.Communication
 import com.android.currencyrate.presentation.MainViewModel
 import com.android.currencyrate.presentation.ResourceProvider
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class App: Application() {
 
-lateinit var viewModel: MainViewModel
+    lateinit var viewModel: MainViewModel
 
     override fun onCreate() {
         super.onCreate()
-        val retrofit = Retrofit.Builder().baseUrl("https://currate.ru/")
+
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+
+        val client = OkHttpClient.Builder()
+            .addInterceptor(interceptor)
+            .build()
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://currate.ru/")
+            .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val service = retrofit.create(ApiService::class.java)
@@ -46,5 +58,4 @@ lateinit var viewModel: MainViewModel
         )
 
     }
-
 }
