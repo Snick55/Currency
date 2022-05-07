@@ -28,8 +28,12 @@ class MainViewModel(
         }
     }
 
-    fun observe(owner: LifecycleOwner, observer: Observer<Currency>){
+    fun observeSuccess(owner: LifecycleOwner, observer: Observer<Currency>){
         communication.observeSuccess(owner, observer)
+    }
+
+    fun observeError(owner: LifecycleOwner, observer: Observer<String>){
+        communication.observeError(owner, observer)
     }
 
 }
