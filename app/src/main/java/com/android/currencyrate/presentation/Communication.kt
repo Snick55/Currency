@@ -10,20 +10,19 @@ interface Communication {
 
     fun show(currency: Currency)
     fun show(errorMessage: String)
-    fun observeError(owner: LifecycleOwner,observer: Observer<String>)
-    fun observeSuccess(owner: LifecycleOwner,observer: Observer<Currency>)
+    fun observeError(owner: LifecycleOwner, observer: Observer<String>)
+    fun observeSuccess(owner: LifecycleOwner, observer: Observer<Currency>)
 
 
-
-    class Base: Communication{
+    class Base : Communication {
         private val successLiveData = MutableLiveData<Currency>()
 
         private val errorLiveData = MutableLiveData<String>()
 
 
         override fun show(currency: Currency) {
-           successLiveData.value = currency
-            Log.d("TAG","::::::::liveData Value is ${successLiveData.value}")
+            successLiveData.value = currency
+            Log.d("TAG", "::::::::liveData Value is ${successLiveData.value}")
         }
 
         override fun show(errorMessage: String) {
